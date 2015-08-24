@@ -23,7 +23,7 @@ namespace HttpProxyWebRole.Controllers {
         }
 
         // GET api/meetup
-        public async Task<IEnumerable<UgEvent>> Get(int count = 25) {
+        public async Task<IEnumerable<UgEvent>> Get(int count = 20) {
 
             //var cmEvents = _cmChannel.GetEvents(count);
             //var mEvents = _meetupChannel.GetEvents(count);
@@ -33,9 +33,10 @@ namespace HttpProxyWebRole.Controllers {
             //return meetups;
 
             List<Task<IEnumerable<UgEvent>>> tasks = new List<Task<IEnumerable<UgEvent>>>();
+            int perChannelCount = (int)Math.Round((decimal)count/_store.RegisteredChannels.Count, 0, MidpointRounding.AwayFromZero);
 
             foreach (var channel in _store.RegisteredChannels) {
-                    tasks.Add(channel.GetEvents(count));
+                    tasks.Add(channel.GetEvents(perChannelCount));
             }
             var agmeets = await Task.WhenAll(tasks);
             return agmeets.SelectMany(m => m).OrderBy(m => m.EventDateTime).Take(count);
