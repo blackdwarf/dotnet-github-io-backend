@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Routing;
-using Microsoft.Framework.Configuration;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Runtime;
+// using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.DependencyInjection;
+// using Microsoft.Framework.Runtime;
+using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 using UgAggregator.Channels;
 using UgAggregator.Contracts;
 using UgAggregator.Models;
 using UgAggregator.Services;
+using Microsoft.AspNetCore.Cors;
 
 namespace UgAggregator
 {
@@ -26,7 +29,7 @@ namespace UgAggregator
             //var configuration = new Configuration()
             //    .AddJsonFile("config.json");
 
-            var configBuilder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
+            var configBuilder = new ConfigurationBuilder()
                 .AddJsonFile("config.json");
 
             //Configuration = configuration;
@@ -37,11 +40,10 @@ namespace UgAggregator
         // Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvcCore();
 
             /* CORS configuration */
-            services.AddCors();
-            services.ConfigureCors(options => {
+            services.AddCors(options => {
                 options.AddPolicy("ugAggregatorAll",
                     builder => builder.AllowAnyOrigin()
                         .AllowAnyHeader()
@@ -52,20 +54,22 @@ namespace UgAggregator
             //var debug = Configuration.GetSubKey("CommunityMegaphone");
             //services.Configure<CommunityMegaphoneConfiguration>(Configuration.GetSubKey("CommunityMegaphone"));
             //services.Configure<MeetupConfiguration>(Configuration.Get("Meetup"));
-            services.AddInstance<CommunityMegaphoneConfiguration>(_cmConf);
-            services.AddInstance<MeetupConfiguration>(_mConf);
+            // services.AddInstance<CommunityMegaphoneConfiguration>(_cmConf);
+            // services.AddInstance<MeetupConfiguration>(_mConf);
+            services.AddSingleton<CommunityMegaphoneConfiguration>(_cmConf);
+            services.AddSingleton<MeetupConfiguration>(_mConf);
             services.AddTransient<IHttpService, HttpService>();
             services.AddTransient<IChannelStore, DefaultChannelStore>();
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
-            // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
+            // You will also need to add the Microsoft.AspNetCore.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
             // services.AddWebApiConventions();
         }
 
         // Configure is called after ConfigureServices is called.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             // Configure the HTTP request pipeline.
-            app.UseStaticFiles();
+            // app.UseStaticFiles();
 
             // Add MVC to the request pipeline.
             app.UseMvc();
@@ -79,11 +83,11 @@ namespace UgAggregator
 
         private void SetConfiguration(IConfiguration config) {
             _cmConf = new CommunityMegaphoneConfiguration {
-                Url = config.Get("CommunityMegaphone:Url")
+                Url = config["CommunityMegaphone:Url"]
             };
             _mConf = new MeetupConfiguration {
-                Url = config.Get("Meetup:Url"),
-                ApiKey = config.Get("Meetup:ApiKey")
+                Url = config["Meetup:Url"],
+                ApiKey = config["Meetup:ApiKey"]
             };
 
         }

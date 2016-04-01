@@ -1,36 +1,39 @@
 ﻿{
+    "name": "UGAggregator",
     "webroot": "wwwroot",
     "version": "1.0.0-*",
-
-    "dependencies": {
-        "Microsoft.AspNet.Mvc": "6.0.0-beta5",
-        "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
-        "Microsoft.AspNet.Server.WebListener": "1.0.0-beta5",
-        "Microsoft.AspNet.StaticFiles": "1.0.0-beta5",
-        "Microsoft.Framework.Logging": "1.0.0-beta5",
-        "System.Net.Http": "4.0.0-beta-23019",
-        "Microsoft.Framework.Configuration.Abstractions": "1.0.0-beta5",
-        "Microsoft.Framework.Configuration.Json": "1.0.0-beta5"
+    
+    "compilationOptions": {
+        "emitEntryPoint": true
     },
 
-    "commands": {
-        "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:5000"
+    "dependencies": {
+        "Microsoft.NETCore.App": {
+            "type": "platform",
+            "version": "1.0.0-rc2-23911" 
+        },
+        "Microsoft.Extensions.Logging.Console": "1.0.0-*", 
+        "Microsoft.Extensions.Configuration": "1.0.0-*",
+        "Microsoft.Extensions.Configuration.Json": "1.0.0-*",
+        "Microsoft.Extensions.PlatformAbstractions": "1.0.0-*", 
+        "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0-*", 
+        "Microsoft.AspNetCore.Mvc.Core": "1.0.0-*", 
+        "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0-*", 
+        "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-*", 
+        "System.Runtime.Serialization.Primitives": "4.1.1-*",
+        "Microsoft.AspNetCore.Cors": "1.0.0-*" 
+    },
+    
+    "tools": {
+        "dotnet-publish-iis": "1.0.0-*"
     },
 
     "frameworks": {
-        "dnxcore50": { }
-    },
-
-    "exclude": [
-        "wwwroot",
-        "node_modules",
-        "bower_components"
-    ],
-    "publishExclude": [
-        "node_modules",
-        "bower_components",
-        "**.xproj",
-        "**.user",
-        "**.vspscc"
-    ]
+        "netstandard1.5": {
+            "imports": [
+                "portable-net45+wp80+win8+wpa81+dnxcore50",
+                "net451"
+            ]
+         }
+    }
 }

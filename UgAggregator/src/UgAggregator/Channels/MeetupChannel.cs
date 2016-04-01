@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Framework.Caching.Memory;
+// using Microsoft.Framework.Caching.Memory;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UgAggregator.Contracts;
@@ -15,12 +15,12 @@ namespace UgAggregator.Channels
 
         private readonly IHttpService _transport;
         private readonly MeetupConfiguration _conf;
-        private readonly IMemoryCache _cache;
+        // private readonly IMemoryCache _cache;
 
         public MeetupChannel(IHttpService t, MeetupConfiguration c) {
             _transport = t;
             _conf = c;
-            _cache = new MemoryCache(new MemoryCacheOptions());
+            // _cache = new MemoryCache(new MemoryCacheOptions());
         }
 
         public async Task<IEnumerable<UgEvent>> GetEvents(int count = 25) {
