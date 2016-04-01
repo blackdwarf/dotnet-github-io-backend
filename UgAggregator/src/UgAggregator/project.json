@@ -10,7 +10,7 @@
     "dependencies": {
         "Microsoft.NETCore.App": {
             "type": "platform",
-            "version": "1.0.0-rc2-23911" 
+            "version": "1.0.0-rc2-23930" 
         },
         "Microsoft.Extensions.Logging.Console": "1.0.0-*", 
         "Microsoft.Extensions.Configuration": "1.0.0-*",
@@ -23,6 +23,8 @@
         "System.Runtime.Serialization.Primitives": "4.1.1-*",
         "Microsoft.AspNetCore.Cors": "1.0.0-*" 
     },
+    
+    "content": ["config.json"],
     
     "tools": {
         "dotnet-publish-iis": "1.0.0-*"

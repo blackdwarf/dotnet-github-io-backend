@@ -30,7 +30,7 @@ namespace UgAggregator
             //    .AddJsonFile("config.json");
 
             var configBuilder = new ConfigurationBuilder()
-                .AddJsonFile("config.json");
+                .AddJsonFile("./config.json");
 
             //Configuration = configuration;
             SetConfiguration(configBuilder.Build());
@@ -40,7 +40,7 @@ namespace UgAggregator
         // Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvcCore();
+            services.AddMvcCore().AddJsonFormatters();
 
             /* CORS configuration */
             services.AddCors(options => {
@@ -51,18 +51,10 @@ namespace UgAggregator
                         .AllowCredentials()
                         );
             });
-            //var debug = Configuration.GetSubKey("CommunityMegaphone");
-            //services.Configure<CommunityMegaphoneConfiguration>(Configuration.GetSubKey("CommunityMegaphone"));
-            //services.Configure<MeetupConfiguration>(Configuration.Get("Meetup"));
-            // services.AddInstance<CommunityMegaphoneConfiguration>(_cmConf);
-            // services.AddInstance<MeetupConfiguration>(_mConf);
             services.AddSingleton<CommunityMegaphoneConfiguration>(_cmConf);
             services.AddSingleton<MeetupConfiguration>(_mConf);
             services.AddTransient<IHttpService, HttpService>();
             services.AddTransient<IChannelStore, DefaultChannelStore>();
-            // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
-            // You will also need to add the Microsoft.AspNetCore.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
-            // services.AddWebApiConventions();
         }
 
         // Configure is called after ConfigureServices is called.
