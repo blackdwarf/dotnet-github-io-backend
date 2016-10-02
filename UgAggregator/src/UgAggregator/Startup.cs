@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-// using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
-// using Microsoft.Framework.Runtime;
-using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
-using UgAggregator.Channels;
 using UgAggregator.Contracts;
 using UgAggregator.Models;
 using UgAggregator.Services;
-using Microsoft.AspNetCore.Cors;
 
 namespace UgAggregator
 {
@@ -24,7 +14,7 @@ namespace UgAggregator
         //public IConfiguration Configuration { get; set; }
         private CommunityMegaphoneConfiguration _cmConf { get; set; }
         private MeetupConfiguration _mConf { get; set; }
-        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
+        public Startup(IHostingEnvironment env)
         {
             //var configuration = new Configuration()
             //    .AddJsonFile("config.json");

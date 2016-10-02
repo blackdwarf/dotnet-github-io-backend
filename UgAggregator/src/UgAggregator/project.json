@@ -1,41 +1,51 @@
 ﻿{
-    "name": "UGAggregator",
-    "webroot": "wwwroot",
-    "version": "1.0.0-*",
-    
-    "compilationOptions": {
-        "emitEntryPoint": true
-    },
+  "name": "UGAggregator",
+  "webroot": "wwwroot",
+  "version": "1.0.0-*",
 
-    "dependencies": {
-        "Microsoft.NETCore.App": {
-            "type": "platform",
-            "version": "1.0.0-rc2-23930" 
-        },
-        "Microsoft.Extensions.Logging.Console": "1.0.0-*", 
-        "Microsoft.Extensions.Configuration": "1.0.0-*",
-        "Microsoft.Extensions.Configuration.Json": "1.0.0-*",
-        "Microsoft.Extensions.PlatformAbstractions": "1.0.0-*", 
-        "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0-*", 
-        "Microsoft.AspNetCore.Mvc.Core": "1.0.0-*", 
-        "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0-*", 
-        "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-*", 
-        "System.Runtime.Serialization.Primitives": "4.1.1-*",
-        "Microsoft.AspNetCore.Cors": "1.0.0-*" 
-    },
-    
-    "content": ["config.json"],
-    
-    "tools": {
-        "dotnet-publish-iis": "1.0.0-*"
-    },
+  "buildOptions": {
+    "emitEntryPoint": true,
+    "debugType": "portable"
+  },
 
-    "frameworks": {
-        "netstandard1.5": {
-            "imports": [
-                "portable-net45+wp80+win8+wpa81+dnxcore50",
-                "net451"
-            ]
-         }
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.1"
+    },
+    "Microsoft.Extensions.Logging.Console": "1.0.0-*",
+    "Microsoft.Extensions.Configuration": "1.0.0-*",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0-*",
+    "Microsoft.Extensions.PlatformAbstractions": "1.0.0-*",
+    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0-*",
+    "Microsoft.AspNetCore.Mvc.Core": "1.0.0-*",
+    "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0-*",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-*",
+    "System.Runtime.Serialization.Primitives": "4.1.1-*",
+    "Microsoft.AspNetCore.Cors": "1.0.0-*"
+  },
+
+  "content": [ "config.json" ],
+
+  "tools": {
+    "Microsoft.AspNetCore.Server.IISIntegration.Tools": {
+      "version": "1.0.0-preview2-final",
+      "imports": "portable-net45+win8+dnxcore50"
+    },
+    "Microsoft.VisualStudio.Web.CodeGeneration.Tools": {
+      "version": "1.0.0-preview2-final",
+      "imports": [
+        "portable-net45+win8+dnxcore50",
+        "portable-net45+win8"
+      ]
     }
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "portable-net45+win8"
+      ]
+    }
+  }
 }
